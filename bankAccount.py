@@ -84,16 +84,16 @@ class BankAccount:
         return self
 
     def withdraw(self, amount):
-        if self.account_balance - amount <= 0:
+        if BankAccount.can_withdraw(self.account_balance, amount):
+            self.account_balance -= amount
+            print(f"Your withdrawal of ${amount:,.2f} has been completed!")
+            print("")
+            return self
+        else:
             print("Insufficient funds: Charging a $5.00 fee!")
             print("")
             self.account_balance -= 5
             return self
-        else:
-            self.account_balance -= amount
-            print(f"Your withdrawal of ${amount:,.2f} has been completed!")
-            print("")
-        return self
 
     def display_account_info(self):
         print(f"Your balance is: ${self.account_balance:,.2f}")
@@ -121,6 +121,13 @@ class BankAccount:
         # print(f"The balance of all the accounts is:{round(total_sum, 2)}")
         print(f"The balance of all the accounts is: ${total_sum:,.2f}")
         print("")
+
+    @staticmethod
+    def can_withdraw(balance, amount):
+        if (balance - amount < 0):
+            return False
+        else:
+            return True
 
 
 # Creating the users accounts
